@@ -1,0 +1,47 @@
+@startuml 驾照在手好多年
+
+title Cars - Class Diagram
+
+' 厂家视角
+class ManufacturerCar {
+  - vin: String
+  - model: String
+  - productionDate: Date
+  - manufacturer: String
+  + getProductionInfo(): String
+  + recallCar(): void
+}
+
+' 车主视角
+class OwnerCar {
+  - vin: String
+  - ownerName: String
+  - insuranceInfo: String
+  - maintenanceRecords: List<String>
+  + drive(): void
+  + maintain(record: String): void
+  + getInsuranceInfo(): String
+}
+
+' 交通管理机构视角
+class GovCar {
+  - vin: String
+  - registrationNumber: String
+  - annualInspectionDate: Date
+  - violationRecords: List<String>
+  + registerCar(): void
+  + inspectCar(): void
+  + addViolation(record: String): void
+  + getViolationRecords(): List<String>
+}
+
+' 关系
+ManufacturerCar "1" -- "1" OwnerCar : sells >
+OwnerCar "1" -- "1" GovCar : registers >
+GovCar "1" -- "*" OwnerCar : regulates >
+
+note left of ManufacturerCar : Manufacture info\nSales and services
+note right of OwnerCar : Insurance\nMaintenance\nDaily usage
+note right of GovCar : Registration\nInspection\nViolation Management
+
+@enduml

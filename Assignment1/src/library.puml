@@ -1,0 +1,48 @@
+@startuml 书山有路勤为径
+
+title Library Management System - Class Diagram
+
+' 学生类
+class Student {
+  - id: int
+  - name: String
+  - email: String
+  - borrowedBooks: List<Book>
+  + borrowBook(book: Book): boolean
+  + returnBook(book: Book): boolean
+  + getBorrowedBooks(): List<Book>
+}
+
+' 书籍类
+class Book {
+  - isbn: String
+  - title: String
+  - author: String
+  - available: boolean
+  - dueDate: Date
+  + isAvailable(): boolean
+  + setAvailable(status: boolean): void
+  + setDueDate(date: Date): void
+  + getDueDate(): Date
+}
+
+' 管理员类
+class Librarian {
+  - employeeId: String
+  - name: String
+  + addBook(book: Book): void
+  + removeBook(book: Book): void
+  + manageBorrow(student: Student, book: Book): boolean
+  + manageReturn(student: Student, book: Book): boolean
+}
+
+' 关系
+Student "1" -- "*" Book : borrows and returns >
+Librarian "1" -- "*" Book : manages >
+Librarian "1" -- "*" Student : serves >
+
+note left of Student : Student info\nBorrowing & Returning books
+note right of Book : Book info and status
+note right of Librarian : Librarian info\nBook management
+
+@enduml
